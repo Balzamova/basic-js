@@ -2,7 +2,7 @@ const CustomError = require("../extensions/custom-error");
 
 module.exports = function transform(arr) {
   let result = [];
-  for (i = 0; i < arr.length; i++) {
+  for (let i = 0; i < arr.length; i++) {
       if (arr[i] === '`--discard-next`')
         result = arr[i] + arr[i + 2];
       if (arr[i] === '`--discard-prev`')
