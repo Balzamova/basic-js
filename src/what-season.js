@@ -3,9 +3,14 @@ const CustomError = require("../extensions/custom-error");
 module.exports = function getSeason(date) {
  if (!date || date == undefined || date == '0') return 'Unable to determine the time of year!';
 
+ try { 
+     date.getTime(); 
+    } catch(err) { 
+        throw new Error(err); 
+    }
+
  let seasons = ['winter', 'spring', 'summer', 'autumn'];
  let month = date.getMonth();
- let season = '';
 
  if (month == '0' || month == '1' || month == '11') return seasons[0];
  if (month == '2' || month == '3' || month == '4') return seasons[1];
