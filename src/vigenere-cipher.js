@@ -19,18 +19,19 @@ class VigenereCipheringMachine {
     };
 
     let result = [];
-    let mesLetterNumber = 0; //номер буквы в сообщении
-    let keyLetterNumber = 0; //номер буквы в ключе
-    let encLetterNumber = 0; // номер буквы в расшифровке
+    let mesLetterNumber = 0; // номер буквы в сообщении
+    let keyLetterNumber = 0; // номер буквы в ключе
+    let encoderLetterNumber = 0; // номер буквы в кодере
     this.message = message.toUpperCase();
     this.key = key.toUpperCase();
 
     for (let i = 0, j = 0; i < this.message.length; i++) {
       if (this.message[i].match(/[A-Z]/)) {
+
         mesLetterNumber = this.alphabet.indexOf(this.message[i]);
         keyLetterNumber = this.alphabet.indexOf(this.key[j % key.length]);
-        encLetterNumber = (mesLetterNumber + keyLetterNumber) % 26;
-        result.push(this.alphabet[encLetterNumber]);
+        encoderLetterNumber = (mesLetterNumber + keyLetterNumber) % 26;
+        result.push(this.alphabet[encoderLetterNumber]);
         j++;
       } else {
         result.push(this.message[i]);
@@ -47,7 +48,7 @@ class VigenereCipheringMachine {
     let result = [];
     let mesLetterNumber = 0;
     let keyLetterNumber = 0;
-    let decLetterNumber = 0;
+    let decoderLetterNumber = 0;
     this.message = message.toUpperCase();
     this.key = key.toUpperCase();
 
@@ -56,11 +57,11 @@ class VigenereCipheringMachine {
 
         mesLetterNumber = this.alphabet.indexOf(this.message[i]);
         keyLetterNumber = this.alphabet.indexOf(this.key[j % key.length]);
-        decLetterNumber = (mesLetterNumber - keyLetterNumber >= 0)
+        decoderLetterNumber = (mesLetterNumber - keyLetterNumber >= 0)
         ? mesLetterNumber - keyLetterNumber
         : mesLetterNumber - keyLetterNumber + 26;
 
-        result.push(this.alphabet[decLetterNumber]);
+        result.push(this.alphabet[decoderLetterNumber]);
         j++;
       } else {
         result.push(this.message[i]);

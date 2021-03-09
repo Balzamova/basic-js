@@ -1,16 +1,34 @@
 const CustomError = require("../extensions/custom-error");
 
 module.exports = function transform(arr) {
-  let result = [];
-  for (let i = 0; i < arr.length; i++) {
-      if (arr[i] === '`--discard-next`')
-        result = arr[i] + arr[i + 2];
-      if (arr[i] === '`--discard-prev`')
-        result = arr[i - 2] + arr[i];
-      if (arr[i] === '`--double-next`')
-        result = arr[i] + arr[i];
-      if (arr[i] === '`--double-prev`')
-        result = arr[i - 1] + arr[i - 1];
+  if (!Array.isArray(arr)) {
+    throw new Error('Error: arr is not an Array');
+  }
+
+  let result = arr.slice(); // содаем копию массива
+
+  for (let i = 0; i < result.length; i++) {
+    if (result[i] === '--discard-next') {
+      result.splice(i, 2, null);
+    } else if (result[i] === '--discard-prev') {
+      if (i === 0) { 
+        result.splice(i, 1, null); 
+      } else { 
+        result.splice(i - 1, 2, null); 
+      }
+    } else if (result[i] === '--double-next') {
+      if (i === result.length - 1) { 
+        result.splice(i, 1); 
+      } else { 
+        result.splice(i, 1, result[i + 1]); 
+      }
+    } else if (result[i] === '--double-prev') {
+      if (i === 0) { 
+        result.splice(i, 1, null); 
+      } else { 
+        result.splice(i, 1, result[i - 1]); 
+      }
     }
-  return result;
+  }
+  return result.filter(el => el !== null);
 };
