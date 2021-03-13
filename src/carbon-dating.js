@@ -4,11 +4,13 @@ const MODERN_ACTIVITY= 15;
 const HALF_LIFE_PERIOD= 5730;
 
 module.exports = function dateSample(sampleActivity) {
-  let result;
- // typeof(result) === 'number';
-  if (sampleActivity !== null) {
-    typeof(sampleActivity.Number) === 'number';
-    return result = Math.ceil(sampleActivity.Number * 22387);
-  } else return false;
-
+  
+  if( typeof sampleActivity !== "string" ||
+      parseFloat(sampleActivity) <= 0 || 
+      parseFloat(sampleActivity) > 15 ||
+      isNaN(parseFloat(sampleActivity)) ) {
+    return false
+  } 
+    
+  return Math.ceil(Math.log(MODERN_ACTIVITY / sampleActivity) / (Math.log(2) / HALF_LIFE_PERIOD));
 };
